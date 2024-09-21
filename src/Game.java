@@ -1,8 +1,12 @@
+import model.PlaySymbols;
 import model.Player;
 import org.apache.log4j.Logger;
+import view.ConsoleView;
 import view.View;
+import view.WindowView;
 
 import java.awt.*;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 
@@ -11,10 +15,33 @@ public class Game {
     private final static String strInfoAboutStep = "=> Ход игрока %s... \n";
     private final static String strInfoWinUser = "Победил игрок - %s\n";
     private final static String strDeathDead = "Игровое поле заполнено. Продолжение игры невозможно\n";
+    private String titleMessage;
     private String strInfoGameOver;
+    private PlayingField playingField;
+    private View view;
     private static final Logger logger = Logger.getLogger(Game.class);
 
-    public void play(View view, PlayingField playingField, List<Player> players){
+    public Game(String strInfoGame) {
+        this.titleMessage = strInfoGame;
+    }
+
+    public void play(List<Player> players){
+        playingField = new PlayingField();
+        //view = new ConsoleView(titleMessage);
+        view = new WindowView(titleMessage, playingField.getSizeField());
+
+        int userChoice = getUserChoice();
+        switch (userChoice) {
+            case 1 -> {
+                players.get(0).setSymbol(PlaySymbols.SYMBOL_0.getValue());
+                players.get(1).setSymbol(PlaySymbols.SYMBOL_X.getValue());
+            }
+            case 2 -> {
+                players.get(0).setSymbol(PlaySymbols.SYMBOL_X.getValue());
+                players.get(1).setSymbol(PlaySymbols.SYMBOL_0.getValue());
+            }
+        }
+
         logger.info(
                 String.format(
                         "Log => Начало игры =========\nИгроки: %s",
@@ -90,6 +117,22 @@ public class Game {
         return cell;
     }
 
+    private int getUserChoice() {
+        String strSelectSymbol = "Выберете каким символом вы будете играть\n";
+        int selectUserChoice;
+        do {
+            try {
+                String strInfoChoice = String.format("%s:\n1. %s\n2. %s\n", strSelectSymbol, PlaySymbols.SYMBOL_0.getValue(), PlaySymbols.SYMBOL_X.getValue());
+                view.outputMessage(strInfoChoice);
+                selectUserChoice = view.inputNumber();
+                if (selectUserChoice == 1 || selectUserChoice == 2) {
+                    return selectUserChoice;
+                }
+            } catch (InputMismatchException | NumberFormatException exception) {
+                view.outputMessage("Введено не число. Введите 1 или 2.");
+            }
+        } while (true);
+    }
 }
 
 

@@ -4,9 +4,13 @@ import java.util.Scanner;
 
 public class ConsoleView implements View {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
 
-    @Override
+    public ConsoleView(String message) {
+        scanner = new Scanner(System.in);
+        outputMessage(message);
+    }
+
     public int inputNumber() {
         return Integer.parseInt(scanner.next());
     }
@@ -14,6 +18,7 @@ public class ConsoleView implements View {
     public void outputMessage(String message){
         System.out.print(message);
     }
+
     public void drawPlayingField(char[][] array) {
         System.out.printf("%4c", ' ');
         // Заголовок таблицы

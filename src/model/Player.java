@@ -20,7 +20,7 @@ public class Player {
     }
 
     public Player(char symbol, boolean isHuman) {
-        this("model.Player" + ++count, symbol, isHuman);
+        this("Player" + ++count, symbol, isHuman);
     }
 
     public Player(boolean isHuman) {
