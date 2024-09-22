@@ -9,6 +9,9 @@ public class Main {
     private final static char DOT_TAC = 'x';
     private final static String titleMessage = "-= Игра крестики-нолики =-\n";
     private final static String strWinner = "Победил игрок - %s\n";
+    private final static String strDraw = "\tНичья!\n";
+    private final static String strBusyCell = "Клетка занята. Выберите другую.\n";
+    private final static String strNonValidInput = "Такой строки или столбца нет. Введите заново\n";
     private final static String strInputRowNumber = "Введите номер строки: ";
     private final static String strInputColumnNumber = "Введите номер столбца: ";
     private static char dotHuman;
@@ -47,7 +50,8 @@ public class Main {
         }
         Player player1 = new Player(dotHuman, true);
         Player player2 = new Player(dotAI, false);
-        List<Player> playerList = List.of(player1, player2);
+        boolean playerOneIsFirst = Math.random() < 0.5;
+        List<Player> playerList = playerOneIsFirst ? List.of(player1, player2) : List.of(player2, player1);
         playGame(playerList, playingField, view);
         view.printMessage(winner);
     }
@@ -61,6 +65,10 @@ public class Main {
                 view.drawPlayingField(playingField.getField());
                 if (playingField.checkWin(player.getSymbol())) {
                     winner = String.format(strWinner, player.getName());
+                    return;
+                }
+                if (playingField.isMapFull()) {
+                    winner = strDraw; // ничья
                     return;
                 }
             }
@@ -81,7 +89,15 @@ public class Main {
                 selectRow = random.nextInt(field.getSize());
                 selectColumn = random.nextInt(field.getSize());
             }
-            if (field.setSymbol(player.getSymbol(), selectRow, selectColumn)) return;
+            if (field.isValidInput(selectRow, selectColumn)) {
+                if (field.setSymbol(player.getSymbol(), selectRow, selectColumn)) {
+                    return;
+                } else if (player.isHuman()) {
+                    view.printMessage(strBusyCell);
+                }
+            } else {
+                view.printMessage(strNonValidInput);
+            }
         } while (true);
     }
 
