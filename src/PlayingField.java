@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.util.Arrays;
 
@@ -54,28 +55,28 @@ public class PlayingField {
         return true;
     }
 
-//    private boolean checkFillRows(char symbol) {
-//        for (int i = 0; i < playingField.length; i++) {
-//            if (checkFillOneRow(i, symbol)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    private boolean checkFillColumns(char symbol) {
-//        for (int j = 0; j < playingField.length; j++) {
-//            if (checkFillOneColumn(j, symbol)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public boolean checkWin(char symbol) {
-//        return checkFillRows(symbol) || checkFillColumns(symbol)
-//                || checkFillDiagonal(symbol) || checkFillBackDiagonal(symbol);
-//    }
+    private boolean checkFillRows(char symbol) {
+        for (int i = 0; i < playingField.length; i++) {
+            if (checkFillOneRow(i, symbol)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkFillColumns(char symbol) {
+        for (int j = 0; j < playingField.length; j++) {
+            if (checkFillOneColumn(j, symbol)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkWin(char symbol) {
+        return checkFillRows(symbol) || checkFillColumns(symbol)
+                || checkFillDiagonal(symbol) || checkFillBackDiagonal(symbol);
+    }
 
 private boolean checkFillOneRow(int row, char symbol) {
     for (int j = 0; j < playingField[row].length; j++) {

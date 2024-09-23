@@ -1,18 +1,12 @@
-import model.PlaySymbols;
 import model.Player;
 import org.apache.log4j.Logger;
-import view.ConsoleView;
-import view.View;
-import view.WindowView;
 
-import java.util.InputMismatchException;
 import java.util.List;
 
 public class Main {
 
     private final static String titleMessage = "-= Игра крестики-нолики =-\n";
     private static final Logger logger = Logger.getLogger(Main.class);
-    private static Game game;
 
     public static void main(String[] args) {
 
@@ -33,7 +27,7 @@ public class Main {
         Player player1 = new Player(true);
         Player player2 = new Player(false);
         List<Player> listPlayers = List.of(player1, player2);
-        game = new Game(titleMessage);
+        Game game = new Game(titleMessage);
         game.play(listPlayers);
     }
 

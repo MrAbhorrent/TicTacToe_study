@@ -3,7 +3,6 @@ import model.Player;
 import org.apache.log4j.Logger;
 import view.ConsoleView;
 import view.View;
-import view.WindowView;
 
 import java.awt.*;
 import java.util.InputMismatchException;
@@ -15,9 +14,8 @@ public class Game {
     private final static String strInfoAboutStep = "=> Ход игрока %s... \n";
     private final static String strInfoWinUser = "Победил игрок - %s\n";
     private final static String strDeathDead = "Игровое поле заполнено. Продолжение игры невозможно\n";
-    private String titleMessage;
+    private final String titleMessage;
     private String strInfoGameOver;
-    private PlayingField playingField;
     private View view;
     private static final Logger logger = Logger.getLogger(Game.class);
 
@@ -26,9 +24,9 @@ public class Game {
     }
 
     public void play(List<Player> players){
-        playingField = new PlayingField();
-        //view = new ConsoleView(titleMessage);
-        view = new WindowView(titleMessage, playingField.getSizeField());
+        PlayingField playingField = new PlayingField();
+        view = new ConsoleView(titleMessage);
+        //view = new WindowView(titleMessage, playingField.getSizeField());
 
         int userChoice = getUserChoice();
         switch (userChoice) {
@@ -77,9 +75,12 @@ public class Game {
                 view.outputMessage("Введите номер столбца: ");
                 selectColumn = view.inputNumber() - 1;
             } else {
-                Random random = new Random();
-                selectRow = random.nextInt(playingField.getSizeField());
-                selectColumn = random.nextInt(playingField.getSizeField());
+//                Random random = new Random();
+//                selectRow = random.nextInt(playingField.getSizeField());
+//                selectColumn = random.nextInt(playingField.getSizeField());
+                cell = thinkingAICell(player, playingField);
+                selectRow = cell.x;
+                selectColumn = cell.y;
             }
             logger.info(
                     String.format(
@@ -104,21 +105,27 @@ public class Game {
     private static Point thinkingAICell(Player player, PlayingField playingField) {
         Random random = new Random();
         Point cell = new Point();
-        int aiLevel = 1;
+        int aiLevel = 2;
         switch (aiLevel) {
-            case 1:
+            case 1 -> {
                 cell.x = random.nextInt(playingField.getSizeField());
                 cell.y = random.nextInt(playingField.getSizeField());
-                break;
-            case 2:
-                // усложняем логику выбора ячейки для робота
-                break;
+                player.saveTurn(cell);
+            }
+            case 2 -> {
+                do {
+                    cell.x = random.nextInt(playingField.getSizeField());
+                    cell.y = random.nextInt(playingField.getSizeField());
+                } while (player.getHistoryMap().containsKey(cell));
+                player.saveTurn(cell);
+            }
+            // усложняем логику выбора ячейки для робота
         }
         return cell;
     }
 
     private int getUserChoice() {
-        String strSelectSymbol = "Выберете каким символом вы будете играть\n";
+        String strSelectSymbol = "Выберете каким символом вы будете играть";
         int selectUserChoice;
         do {
             try {
