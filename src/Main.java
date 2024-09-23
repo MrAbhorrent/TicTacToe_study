@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class Main {
 
-    private final static int SIZE_FIELD = 3;
     private final static char DOT_TIC = 'o';
     private final static char DOT_TAC = 'x';
     private final static String titleMessage = "-= Игра крестики-нолики =-\n";
@@ -36,7 +35,9 @@ public class Main {
          */
         View view = new ConsoleView();
         view.printMessage(titleMessage);
-        PlayingField playingField = new PlayingField(SIZE_FIELD);
+        //PlayingField playingField = new PlayingField(SIZE_FIELD);
+        view.printMessage("Выберите размер поля");
+        int size = view.getIntegerNumber();
         int selectUserChoice = getSelectUserChoice(view);
         switch (selectUserChoice) {
             case 1 -> {
@@ -52,11 +53,12 @@ public class Main {
         Player player2 = new Player(dotAI, false);
         //boolean playerOneIsFirst = Math.random() < 0.5;
         List<Player> playerList = Math.random() < 0.5 ? List.of(player1, player2) : List.of(player2, player1);
-        playGame(playerList, playingField, view);
+        playGame(playerList, view, size);
         view.printMessage(winner);
     }
 
-    private static void playGame(List<Player> playerList, PlayingField playingField, View view) {
+    private static void playGame(List<Player> playerList, View view, int sizeField) {
+        PlayingField playingField = new PlayingField(sizeField);
         view.drawPlayingField(playingField.getField());
         do {
             for (Player player: playerList) {

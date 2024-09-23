@@ -4,6 +4,10 @@ public class PlayingField {
     private final char[][] field;
     public static final char EMPTY_CELL = '•';
 
+    public PlayingField() {
+        this(3);
+    }
+
     public PlayingField(int size) {
         this.size = size;
         this.field = init(this.size);
