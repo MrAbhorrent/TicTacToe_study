@@ -6,7 +6,7 @@ public class PlayingField {
 
     public PlayingField(int size) {
         this.size = size;
-        this.field = init(size);
+        this.field = init(this.size);
     }
 
     public int getSize() {
@@ -35,9 +35,7 @@ public class PlayingField {
         return field[row][column] == EMPTY_CELL;
     }
 
-    public boolean isValidInput(int row, int column) {
-        return row >= 0 && row < size && column >= 0 && column < size;
-    }
+
 
     public boolean setSymbol(char symbol, int row, int column){
         if (isEmptyCell(row, column)) {

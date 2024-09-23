@@ -32,6 +32,7 @@ public class ConsoleView implements View{
             }
             drawBorderLineField(array.length, "├", "───┼", "┤");
         }
+        // Последняя строка таблицы
         drawBorderLineField(array.length, "└", "───┴", "┘");
     }
 

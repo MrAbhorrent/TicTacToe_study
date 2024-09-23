@@ -78,6 +78,7 @@ public class Main {
     private static void turnGame(PlayingField field, Player player, View view){
         int selectRow;
         int selectColumn;
+        int maxValidNumber = field.getSize();
         do {
             if (player.isHuman()) {
                 view.printMessage(strInputRowNumber);
@@ -89,7 +90,7 @@ public class Main {
                 selectRow = random.nextInt(field.getSize());
                 selectColumn = random.nextInt(field.getSize());
             }
-            if (field.isValidInput(selectRow, selectColumn)) {
+            if (isValidInput(maxValidNumber, selectRow, selectColumn)) {
                 if (field.setSymbol(player.getSymbol(), selectRow, selectColumn)) {
                     return;
                 } else if (player.isHuman()) {
@@ -114,5 +115,9 @@ public class Main {
                 view.printMessage("Введено не число. Введите 1 или 2.\n");
             }
         } while (true);
+    }
+
+    public static boolean isValidInput(int maxNumber, int row, int column) {
+        return row >= 0 && row < maxNumber && column >= 0 && column < maxNumber;
     }
 }
