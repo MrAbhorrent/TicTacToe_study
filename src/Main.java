@@ -50,8 +50,8 @@ public class Main {
         }
         Player player1 = new Player(dotHuman, true);
         Player player2 = new Player(dotAI, false);
-        boolean playerOneIsFirst = Math.random() < 0.5;
-        List<Player> playerList = playerOneIsFirst ? List.of(player1, player2) : List.of(player2, player1);
+        //boolean playerOneIsFirst = Math.random() < 0.5;
+        List<Player> playerList = Math.random() < 0.5 ? List.of(player1, player2) : List.of(player2, player1);
         playGame(playerList, playingField, view);
         view.printMessage(winner);
     }
