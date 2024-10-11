@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class PlayingField {
 
     private final int size;
@@ -19,11 +21,9 @@ public class PlayingField {
     }
 
     public char[][] getField() {
-        char[][] tempArray = new char[size][size]; // deep copy of game field
-        for (int i = 0; i < size; i++) {
-            System.arraycopy(field[i], 0, tempArray[i], 0, size);
-        }
-        return tempArray;
+        return Arrays.stream(field).
+                map(row -> Arrays.copyOf(row, row.length)).
+                toArray(char[][]::new);
     }
 
     private char[][] init(int size){
