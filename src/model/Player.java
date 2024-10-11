@@ -1,3 +1,5 @@
+package model;
+
 public class Player {
 
     private static int count = 0;
@@ -7,7 +9,7 @@ public class Player {
 
 
     public Player(char symbol, boolean isHuman) {
-        this(String.format("Player%d", ++count), symbol, isHuman);
+        this(String.format("model.Player%d", ++count), symbol, isHuman);
     }
 
     public Player(String name, char symbol, boolean isHuman) {

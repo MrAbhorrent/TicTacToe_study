@@ -1,3 +1,5 @@
+package view;
+
 public interface View {
 
     int getIntegerNumber();
