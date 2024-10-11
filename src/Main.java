@@ -35,7 +35,6 @@ public class Main {
          */
         View view = new ConsoleView();
         view.printMessage(titleMessage);
-        //PlayingField playingField = new PlayingField(SIZE_FIELD);
         view.printMessage("Выберите размер поля");
         int size = view.getIntegerNumber();
         int selectUserChoice = getSelectUserChoice(view);

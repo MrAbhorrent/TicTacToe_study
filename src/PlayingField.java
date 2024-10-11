@@ -3,9 +3,10 @@ public class PlayingField {
     private final int size;
     private final char[][] field;
     public static final char EMPTY_CELL = '•';
+    public static final int FIELD_SIZE = 3;
 
     public PlayingField() {
-        this(3);
+        this(FIELD_SIZE);
     }
 
     public PlayingField(int size) {
